@@ -1,5 +1,6 @@
 import { useRef, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
+import allPosts from '../data/posts.json'
 
 function useReveal() {
   const ref = useRef(null)
@@ -15,7 +16,7 @@ function useReveal() {
           }
         })
       },
-      { threshold: 0.12 }
+      { threshold: 0.1 }
     )
     const items = el.querySelectorAll('.reveal')
     items.forEach((item) => observer.observe(item))
@@ -24,124 +25,144 @@ function useReveal() {
   return ref
 }
 
+function formatDate(dateStr, lang) {
+  try {
+    const d = new Date(dateStr)
+    return d.toLocaleDateString(lang === 'pt' ? 'pt-BR' : 'en-US', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+    })
+  } catch {
+    return dateStr
+  }
+}
+
+function PostCard({ post, lang, index, readMoreLabel }) {
+  // Extract a URL from the first markdown link in the body, if present
+  const urlMatch = post.body && post.body.match(/\[.*?\]\((https?:\/\/[^)]+)\)/)
+  const url = urlMatch ? urlMatch[1] : null
+
+  const CardWrapper = url ? 'a' : 'article'
+  const cardProps = url
+    ? { href: url, target: '_blank', rel: 'noopener noreferrer' }
+    : {}
+
+  return (
+    <CardWrapper
+      {...cardProps}
+      className={`card card-hover block p-7 lg:p-9 reveal reveal-delay-${Math.min(index + 1, 5)} ${url ? 'group cursor-pointer' : ''}`}
+    >
+      <div className="flex items-start justify-between gap-4 mb-4">
+        <div className="flex items-center gap-3">
+          <span className="tag-terra">{post.lang === 'pt' ? 'PT' : 'EN'}</span>
+          <span className="font-body text-bark-faint text-xs tracking-wide">
+            {formatDate(post.date, lang)}
+          </span>
+        </div>
+        {url && (
+          <span className="text-terra/40 group-hover:text-terra transition-colors duration-200 flex-shrink-0" aria-hidden="true">↗</span>
+        )}
+      </div>
+
+      <h3
+        className="font-display font-400 text-bark leading-snug mb-3 group-hover:text-terra transition-colors duration-200"
+        style={{ fontSize: 'clamp(1.1rem, 1.8vw, 1.4rem)', letterSpacing: '-0.01em' }}
+      >
+        {post.title}
+      </h3>
+
+      <p className="font-body text-bark-muted font-300 leading-[1.75] text-sm">
+        {post.excerpt}
+      </p>
+
+      {url && (
+        <div className="mt-5 pt-5 border-t border-border">
+          <span className="inline-flex items-center gap-1.5 font-body text-[0.75rem] tracking-[0.08em] uppercase text-terra font-500">
+            {readMoreLabel}
+            <span aria-hidden="true">→</span>
+          </span>
+        </div>
+      )}
+    </CardWrapper>
+  )
+}
+
 export default function Writing() {
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
   const sectionRef = useReveal()
-  const article = t('writing.featuredArticle', { returnObjects: true })
+  const lang = i18n.language === 'en' ? 'en' : 'pt'
+
+  const posts = allPosts.filter((p) => p.lang === lang)
 
   return (
     <section id="publicacoes" className="py-24 lg:py-36" ref={sectionRef}>
       <div className="max-w-editorial mx-auto px-6 lg:px-12">
         {/* Section header */}
-        <div className="reveal mb-16 lg:mb-20">
+        <div className="reveal mb-14 lg:mb-18">
           <p className="section-label mb-4">{t('writing.sectionLabel')}</p>
           <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6">
             <h2
-              className="font-display font-light text-ivory"
+              className="font-display font-300 text-bark"
               style={{
-                fontSize: 'clamp(1.8rem, 4vw, 3.5rem)',
-                letterSpacing: '-0.025em',
+                fontSize: 'clamp(1.9rem, 4vw, 3.6rem)',
+                letterSpacing: '-0.02em',
                 lineHeight: 1.05,
               }}
             >
               {t('writing.sectionTitle')}
             </h2>
-            <p className="font-body text-ivory/50 font-light leading-relaxed max-w-sm" style={{ fontSize: '0.9375rem' }}>
+            <p
+              className="font-body text-bark-muted font-300 leading-relaxed max-w-sm"
+              style={{ fontSize: '0.9375rem' }}
+            >
               {t('writing.sectionIntro')}
             </p>
           </div>
-          <span className="editorial-rule-full mt-8" />
+          <span className="hairline mt-8 block" />
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
-          {/* Featured article — large card */}
-          <div className="lg:col-span-8 reveal reveal-delay-1">
-            <a
-              href={article.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group block border border-ivory/10 hover:border-gold/30 transition-all duration-500 p-8 lg:p-12 relative overflow-hidden"
-            >
-              {/* Hover glow */}
-              <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
-                style={{ background: 'radial-gradient(ellipse 60% 50% at 30% 50%, rgba(201,168,76,0.04) 0%, transparent 70%)' }}
+        {posts.length > 0 ? (
+          <div className="flex flex-col gap-5">
+            {posts.map((post, i) => (
+              <PostCard
+                key={post.slug}
+                post={post}
+                lang={lang}
+                index={i}
+                readMoreLabel={t('writing.readMore')}
               />
-
-              {/* Featured badge + publication */}
-              <div className="flex items-center gap-4 mb-8">
-                <span className="font-display text-[0.7rem] tracking-[0.15em] uppercase text-obsidian-900 bg-gold px-3 py-1">
-                  {t('writing.featuredLabel')}
-                </span>
-                <span className="font-body text-ivory/40 text-sm tracking-wide">
-                  {article.publication}
-                </span>
-                <span className="font-body text-ivory/25 text-sm">·</span>
-                <span className="font-body text-ivory/40 text-sm">
-                  {article.date}
-                </span>
-              </div>
-
-              {/* Title */}
-              <h3
-                className="font-display font-light text-ivory group-hover:text-ivory transition-colors duration-300 mb-6"
-                style={{
-                  fontSize: 'clamp(1.3rem, 2.5vw, 2rem)',
-                  letterSpacing: '-0.02em',
-                  lineHeight: 1.2,
-                }}
-              >
-                {article.title}
-              </h3>
-
-              {/* Excerpt */}
-              <p className="font-body text-ivory/55 font-light leading-[1.8] mb-8" style={{ fontSize: '0.9375rem' }}>
-                {article.excerpt}
-              </p>
-
-              {/* Footer */}
-              <div className="flex items-center justify-between">
-                <span className="font-body text-ivory/35 text-xs tracking-wide italic">
-                  {article.authors}
-                </span>
-                <span className="inline-flex items-center gap-2 font-display text-xs tracking-[0.1em] uppercase text-gold group-hover:gap-3 transition-all duration-300">
-                  {article.cta}
-                  <span aria-hidden="true">↗</span>
-                </span>
-              </div>
-            </a>
+            ))}
           </div>
-
-          {/* Right column — coming soon + Medium link */}
-          <div className="lg:col-span-4 reveal reveal-delay-2 flex flex-col gap-6">
-            {/* Coming soon card */}
-            <div
-              className="border border-ivory/[0.06] border-dashed p-8 flex flex-col justify-center items-start gap-4"
-              style={{ minHeight: '200px' }}
+        ) : (
+          <div className="reveal reveal-delay-1 card p-10 lg:p-14 flex flex-col gap-4">
+            <span
+              className="font-display text-bark/15 font-300"
+              style={{ fontSize: '3rem', letterSpacing: '-0.04em', lineHeight: 1 }}
+              aria-hidden="true"
             >
-              <span className="font-display text-ivory/20 font-light" style={{ fontSize: '2.5rem', letterSpacing: '-0.04em', lineHeight: 1 }} aria-hidden="true">
-                …
-              </span>
-              <p className="font-display text-ivory/40 font-light" style={{ fontSize: '1rem', letterSpacing: '-0.01em' }}>
-                {t('writing.moreComing')}
-              </p>
-              <p className="font-body text-ivory/30 text-sm leading-relaxed">
-                {t('writing.moreComingDetail')}
-              </p>
-            </div>
-
-            {/* Medium link */}
-            <a
-              href={t('writing.mediumUrl')}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group border border-ivory/10 hover:border-gold/30 transition-all duration-300 p-6 flex items-center justify-between"
-            >
-              <span className="font-display text-ivory/60 group-hover:text-gold transition-colors duration-300 font-light" style={{ fontSize: '0.9rem', letterSpacing: '0.02em' }}>
-                {t('writing.mediumCta')}
-              </span>
-              <span className="text-gold/40 group-hover:text-gold transition-colors duration-300" aria-hidden="true">↗</span>
-            </a>
+              …
+            </span>
+            <p className="font-display text-bark-muted font-300" style={{ fontSize: '1.1rem' }}>
+              {t('writing.noPosts')}
+            </p>
+            <p className="font-body text-bark-faint text-sm leading-relaxed">
+              {t('writing.noPostsDetail')}
+            </p>
           </div>
+        )}
+
+        {/* Medium link */}
+        <div className="reveal reveal-delay-2 mt-8">
+          <a
+            href={t('writing.mediumUrl')}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 font-body text-[0.75rem] tracking-[0.09em] uppercase text-bark-faint hover:text-terra transition-colors duration-200"
+          >
+            {t('writing.mediumCta')}
+            <span className="text-terra/40" aria-hidden="true">↗</span>
+          </a>
         </div>
       </div>
     </section>

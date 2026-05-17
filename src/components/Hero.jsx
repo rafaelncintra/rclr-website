@@ -13,111 +13,123 @@ export default function Hero() {
       setTimeout(() => {
         item.style.opacity = '1'
         item.style.transform = 'translateY(0)'
-      }, 200 + i * 150)
+      }, 180 + i * 130)
     })
   }, [])
 
   return (
     <section
-      className="relative min-h-screen flex flex-col justify-end pb-20 lg:pb-28 overflow-hidden"
+      className="relative min-h-screen flex flex-col justify-center pt-24 pb-20 lg:pb-32 overflow-hidden"
       aria-label="Hero"
     >
-      {/* Background gradient mesh */}
+      {/* Warm radial glow — very subtle */}
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
           background:
-            'radial-gradient(ellipse 80% 60% at 15% 60%, rgba(201,168,76,0.06) 0%, transparent 60%), radial-gradient(ellipse 60% 80% at 85% 20%, rgba(201,168,76,0.04) 0%, transparent 50%), linear-gradient(180deg, #0C0C0E 0%, #111114 100%)',
+            'radial-gradient(ellipse 70% 55% at 60% 40%, rgba(196,99,58,0.055) 0%, transparent 65%)',
         }}
       />
 
-      {/* Vertical rule accent — editorial column marker */}
-      <div className="absolute left-6 lg:left-12 top-0 bottom-0 flex items-stretch pointer-events-none">
-        <div
-          className="w-px"
-          style={{
-            background:
-              'linear-gradient(180deg, transparent 0%, rgba(201,168,76,0.3) 20%, rgba(201,168,76,0.15) 80%, transparent 100%)',
-          }}
-        />
-      </div>
-
-      {/* Large decorative background lettering */}
+      {/* Large ghost wordmark — decorative */}
       <div
-        className="absolute right-0 top-1/2 -translate-y-1/2 pointer-events-none select-none overflow-hidden"
+        className="absolute right-[-2%] top-1/2 -translate-y-1/2 pointer-events-none select-none overflow-hidden"
         aria-hidden="true"
       >
         <span
-          className="font-display font-medium text-ivory/[0.025] whitespace-nowrap"
-          style={{ fontSize: 'clamp(8rem, 25vw, 22rem)', letterSpacing: '-0.04em', lineHeight: 1 }}
+          className="font-display font-300 text-bark/[0.04] whitespace-nowrap"
+          style={{ fontSize: 'clamp(9rem, 26vw, 24rem)', letterSpacing: '-0.03em', lineHeight: 1 }}
         >
           RCLR
         </span>
       </div>
 
       {/* Content */}
-      <div className="relative z-10 max-w-editorial mx-auto w-full px-6 lg:px-12" ref={containerRef}>
+      <div
+        className="relative z-10 max-w-editorial mx-auto w-full px-6 lg:px-12"
+        ref={containerRef}
+      >
         {/* Eyebrow */}
         <div
           data-hero
-          style={{ opacity: 0, transform: 'translateY(20px)', transition: 'opacity 0.8s cubic-bezier(0.22,1,0.36,1), transform 0.8s cubic-bezier(0.22,1,0.36,1)' }}
+          style={{
+            opacity: 0,
+            transform: 'translateY(18px)',
+            transition: 'opacity 0.75s cubic-bezier(0.22,1,0.36,1), transform 0.75s cubic-bezier(0.22,1,0.36,1)',
+          }}
         >
-          <p className="section-label mb-6">{t('hero.eyebrow')}</p>
+          <p className="section-label mb-8">{t('hero.eyebrow')}</p>
         </div>
 
         {/* Headline */}
         <div
           data-hero
-          style={{ opacity: 0, transform: 'translateY(24px)', transition: 'opacity 0.9s cubic-bezier(0.22,1,0.36,1), transform 0.9s cubic-bezier(0.22,1,0.36,1)' }}
+          style={{
+            opacity: 0,
+            transform: 'translateY(22px)',
+            transition: 'opacity 0.85s cubic-bezier(0.22,1,0.36,1), transform 0.85s cubic-bezier(0.22,1,0.36,1)',
+          }}
         >
           <h1
-            className="font-display font-light text-ivory text-balance"
+            className="font-display font-300 text-bark text-balance"
             style={{
-              fontSize: 'clamp(2.8rem, 7vw, 6.5rem)',
-              lineHeight: '0.97',
-              letterSpacing: '-0.025em',
-              maxWidth: '16ch',
+              fontSize: 'clamp(2.8rem, 7vw, 6.8rem)',
+              lineHeight: '1.0',
+              letterSpacing: '-0.02em',
+              maxWidth: '17ch',
             }}
           >
             {t('hero.headline')}
           </h1>
         </div>
 
-        {/* Rule */}
+        {/* Terracotta rule */}
         <div
           data-hero
-          style={{ opacity: 0, transform: 'translateY(16px)', transition: 'opacity 0.8s cubic-bezier(0.22,1,0.36,1), transform 0.8s cubic-bezier(0.22,1,0.36,1)' }}
+          style={{
+            opacity: 0,
+            transform: 'translateY(14px)',
+            transition: 'opacity 0.75s cubic-bezier(0.22,1,0.36,1), transform 0.75s cubic-bezier(0.22,1,0.36,1)',
+          }}
         >
-          <span className="editorial-rule mt-10 mb-8" />
+          <span className="hairline-short mt-10 mb-0 block" />
         </div>
 
-        {/* Subheadline + CTA row */}
+        {/* Subheadline + CTA */}
         <div
           data-hero
-          className="flex flex-col lg:flex-row lg:items-end gap-8 lg:gap-16"
-          style={{ opacity: 0, transform: 'translateY(20px)', transition: 'opacity 0.9s cubic-bezier(0.22,1,0.36,1), transform 0.9s cubic-bezier(0.22,1,0.36,1)' }}
+          className="flex flex-col lg:flex-row lg:items-end gap-8 lg:gap-20 mt-10"
+          style={{
+            opacity: 0,
+            transform: 'translateY(18px)',
+            transition: 'opacity 0.85s cubic-bezier(0.22,1,0.36,1), transform 0.85s cubic-bezier(0.22,1,0.36,1)',
+          }}
         >
           <p
-            className="font-body text-ivory/60 font-light leading-relaxed max-w-prose-md"
-            style={{ fontSize: 'clamp(1rem, 1.5vw, 1.15rem)' }}
+            className="font-body text-bark-muted font-300 leading-[1.82] max-w-prose-md"
+            style={{ fontSize: 'clamp(1rem, 1.4vw, 1.125rem)' }}
           >
             {t('hero.subheadline')}
           </p>
           <div className="flex-shrink-0">
-            <a href="#sobre" className="btn-ghost">
+            <a href="#sobre" className="btn-outline">
               {t('hero.cta')}
-              <span className="text-gold/60" aria-hidden="true">↓</span>
+              <span className="text-terra/70" aria-hidden="true">↓</span>
             </a>
           </div>
         </div>
 
-        {/* Bottom rule */}
+        {/* Bottom full-width hairline */}
         <div
           data-hero
-          className="mt-16"
-          style={{ opacity: 0, transform: 'translateY(12px)', transition: 'opacity 0.8s cubic-bezier(0.22,1,0.36,1), transform 0.8s cubic-bezier(0.22,1,0.36,1)' }}
+          className="mt-16 lg:mt-20"
+          style={{
+            opacity: 0,
+            transform: 'translateY(10px)',
+            transition: 'opacity 0.75s cubic-bezier(0.22,1,0.36,1), transform 0.75s cubic-bezier(0.22,1,0.36,1)',
+          }}
         >
-          <span className="editorial-rule-full" />
+          <span className="hairline block" />
         </div>
       </div>
     </section>

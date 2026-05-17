@@ -12,6 +12,9 @@ dist
 dist-ssr
 *.local
 
+# Generated build artifacts
+src/data/posts.json
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

@@ -15,46 +15,68 @@
 
   body {
     margin: 0;
-    background-color: #0C0C0E;
-    color: #F4F0E8;
-    font-family: 'Newsreader', Georgia, serif;
-    font-weight: 300;
+    background-color: #F5F2EE;
+    color: #1A1714;
+    font-family: 'Outfit', system-ui, sans-serif;
+    font-weight: 400;
     overflow-x: hidden;
   }
 
   ::selection {
-    background-color: #C9A84C;
-    color: #0C0C0E;
+    background-color: #C4633A;
+    color: #F5F2EE;
   }
 }
 
 @layer components {
+  /* Section label — small terracotta eyebrow text */
   .section-label {
-    @apply font-display text-[0.8125rem] font-medium tracking-[0.15em] uppercase text-gold;
+    @apply font-body text-[0.72rem] font-500 tracking-[0.16em] uppercase text-terra;
   }
 
-  .editorial-rule {
-    @apply block w-12 h-px bg-gold/60 my-6;
+  /* Horizontal rules */
+  .hairline {
+    @apply block w-full h-px bg-border my-0;
   }
 
-  .editorial-rule-full {
-    @apply block w-full h-px bg-ivory/10 my-0;
+  .hairline-short {
+    @apply block w-10 h-px bg-terra/50 my-6;
   }
 
+  /* Navigation link */
   .nav-link {
-    @apply font-body text-[0.8125rem] tracking-[0.1em] uppercase text-ivory/60 hover:text-ivory transition-colors duration-300;
+    @apply font-body text-[0.78rem] tracking-[0.09em] uppercase text-bark-muted hover:text-bark transition-colors duration-200;
   }
 
-  .btn-ghost {
-    @apply inline-flex items-center gap-3 font-display text-sm tracking-[0.08em] uppercase border border-gold/40 text-gold px-6 py-3 hover:bg-gold/10 hover:border-gold transition-all duration-300;
+  /* Buttons */
+  .btn-primary {
+    @apply inline-flex items-center gap-2.5 font-body text-[0.8125rem] font-500 tracking-[0.07em] uppercase bg-terra text-sand-50 px-6 py-3 rounded-full hover:bg-terra-dim transition-all duration-200;
   }
 
-  .speaking-tag {
-    @apply inline-block font-body text-[0.75rem] tracking-[0.06em] px-2 py-0.5 border border-ivory/20 text-ivory/50;
+  .btn-outline {
+    @apply inline-flex items-center gap-2.5 font-body text-[0.8125rem] font-500 tracking-[0.07em] uppercase border border-border text-bark-muted px-6 py-3 rounded-full hover:border-terra/50 hover:text-terra transition-all duration-200;
   }
 
-  .speaking-tag-intl {
-    @apply inline-block font-body text-[0.75rem] tracking-[0.06em] px-2 py-0.5 border border-gold/40 text-gold;
+  /* Cards */
+  .card {
+    @apply bg-sand-200 rounded-2xl shadow-card border border-sand-400/60;
+  }
+
+  .card-hover {
+    @apply hover:shadow-card-hover hover:-translate-y-0.5 transition-all duration-300;
+  }
+
+  /* Tags */
+  .tag {
+    @apply inline-block font-body text-[0.68rem] tracking-[0.06em] px-2.5 py-1 rounded-full bg-sand-300 text-bark-muted;
+  }
+
+  .tag-terra {
+    @apply inline-block font-body text-[0.68rem] tracking-[0.06em] px-2.5 py-1 rounded-full bg-terra/10 text-terra font-500;
+  }
+
+  .tag-intl {
+    @apply inline-block font-body text-[0.68rem] tracking-[0.06em] px-2.5 py-1 rounded-full bg-terra/15 text-terra font-500;
   }
 }
 
@@ -62,28 +84,33 @@
   .text-balance {
     text-wrap: balance;
   }
+  .font-500 {
+    font-weight: 500;
+  }
+  .font-300 {
+    font-weight: 300;
+  }
 }
 
-/* Custom scrollbar */
-::-webkit-scrollbar {
-  width: 4px;
-}
-::-webkit-scrollbar-track {
-  background: #0C0C0E;
-}
-::-webkit-scrollbar-thumb {
-  background: rgba(201, 168, 76, 0.25);
-}
-::-webkit-scrollbar-thumb:hover {
-  background: rgba(201, 168, 76, 0.5);
+/* Subtle paper-grain texture overlay */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.022;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 256px 256px;
 }
 
 /* Scroll reveal */
 .reveal {
   opacity: 0;
-  transform: translateY(28px);
-  transition: opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1),
-              transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+  transform: translateY(20px);
+  transition: opacity 0.72s cubic-bezier(0.22, 1, 0.36, 1),
+              transform 0.72s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .reveal.visible {
@@ -91,8 +118,14 @@
   transform: translateY(0);
 }
 
-.reveal-delay-1 { transition-delay: 0.1s; }
-.reveal-delay-2 { transition-delay: 0.2s; }
-.reveal-delay-3 { transition-delay: 0.3s; }
-.reveal-delay-4 { transition-delay: 0.4s; }
-.reveal-delay-5 { transition-delay: 0.5s; }
+.reveal-delay-1 { transition-delay: 0.08s; }
+.reveal-delay-2 { transition-delay: 0.16s; }
+.reveal-delay-3 { transition-delay: 0.24s; }
+.reveal-delay-4 { transition-delay: 0.32s; }
+.reveal-delay-5 { transition-delay: 0.40s; }
+
+/* Custom scrollbar */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: #F5F2EE; }
+::-webkit-scrollbar-thumb { background: #DDD8D0; }
+::-webkit-scrollbar-thumb:hover { background: #C4633A; }

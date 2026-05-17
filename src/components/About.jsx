@@ -15,7 +15,7 @@ function useReveal() {
           }
         })
       },
-      { threshold: 0.12 }
+      { threshold: 0.1 }
     )
     const items = el.querySelectorAll('.reveal')
     items.forEach((item) => observer.observe(item))
@@ -29,69 +29,69 @@ function PersonCard({ person, index }) {
   const data = t(`about.${person}`, { returnObjects: true })
 
   return (
-    <article className={`reveal reveal-delay-${index + 1}`}>
-      {/* Index number */}
-      <div className="flex items-start gap-6 mb-8">
+    <article className={`card card-hover p-8 lg:p-10 reveal reveal-delay-${index + 1}`}>
+      {/* Index + name block */}
+      <div className="flex items-start gap-5 mb-7">
         <span
-          className="font-display text-gold/20 font-light flex-shrink-0"
-          style={{ fontSize: '4rem', lineHeight: 1, letterSpacing: '-0.04em' }}
+          className="font-display text-terra/20 font-300 flex-shrink-0 leading-none"
+          style={{ fontSize: '3.5rem', letterSpacing: '-0.04em' }}
           aria-hidden="true"
         >
           0{index + 1}
         </span>
-        <div className="pt-2">
+        <div className="pt-1 min-w-0">
           <h3
-            className="font-display font-light text-ivory"
-            style={{ fontSize: 'clamp(1.4rem, 2.5vw, 2rem)', letterSpacing: '-0.02em', lineHeight: 1.1 }}
+            className="font-display font-400 text-bark leading-tight"
+            style={{ fontSize: 'clamp(1.3rem, 2.2vw, 1.75rem)', letterSpacing: '-0.015em' }}
           >
             {data.name}
           </h3>
-          <p className="font-body text-gold text-sm mt-2 font-light tracking-wide">
+          <p className="font-body text-terra text-sm mt-1.5 font-500 leading-snug">
             {data.role}
           </p>
-          <p className="font-body text-ivory/40 text-xs mt-1 tracking-[0.08em] uppercase">
+          <p className="font-body text-bark-faint text-xs mt-1 tracking-[0.08em] uppercase">
             {data.location}
           </p>
         </div>
       </div>
 
-      {/* Thin rule */}
-      <div className="w-full h-px bg-ivory/8 mb-6" />
+      {/* Divider */}
+      <div className="hairline mb-7" />
 
       {/* Bio */}
-      <p className="font-body text-ivory/65 leading-[1.8] font-light" style={{ fontSize: '1rem' }}>
+      <p className="font-body text-bark-muted leading-[1.82] font-300" style={{ fontSize: '0.9375rem' }}>
         {data.bio}
       </p>
 
       {/* Tags */}
       <div className="flex flex-wrap gap-2 mt-6">
         {data.tags.map((tag) => (
-          <span key={tag} className="speaking-tag">
+          <span key={tag} className="tag">
             {tag}
           </span>
         ))}
       </div>
 
       {/* Links */}
-      <div className="flex items-center gap-4 mt-6">
+      <div className="flex items-center gap-5 mt-7 pt-6 border-t border-border">
         <a
           href={data.linkedin}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 font-body text-xs tracking-[0.08em] uppercase text-ivory/40 hover:text-gold transition-colors duration-300"
+          className="inline-flex items-center gap-1.5 font-body text-[0.75rem] tracking-[0.08em] uppercase text-bark-faint hover:text-terra transition-colors duration-200"
         >
           LinkedIn
-          <span className="text-gold/30" aria-hidden="true">↗</span>
+          <span className="text-terra/40" aria-hidden="true">↗</span>
         </a>
         {data.medium && (
           <a
             href={data.medium}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 font-body text-xs tracking-[0.08em] uppercase text-ivory/40 hover:text-gold transition-colors duration-300"
+            className="inline-flex items-center gap-1.5 font-body text-[0.75rem] tracking-[0.08em] uppercase text-bark-faint hover:text-terra transition-colors duration-200"
           >
             Medium
-            <span className="text-gold/30" aria-hidden="true">↗</span>
+            <span className="text-terra/40" aria-hidden="true">↗</span>
           </a>
         )}
       </div>
@@ -107,28 +107,31 @@ export default function About() {
     <section id="sobre" className="py-24 lg:py-36" ref={sectionRef}>
       <div className="max-w-editorial mx-auto px-6 lg:px-12">
         {/* Section header */}
-        <div className="reveal mb-16 lg:mb-20">
+        <div className="reveal mb-14 lg:mb-18">
           <p className="section-label mb-4">{t('about.sectionLabel')}</p>
           <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6">
             <h2
-              className="font-display font-light text-ivory"
+              className="font-display font-300 text-bark"
               style={{
-                fontSize: 'clamp(1.8rem, 4vw, 3.5rem)',
-                letterSpacing: '-0.025em',
+                fontSize: 'clamp(1.9rem, 4vw, 3.6rem)',
+                letterSpacing: '-0.02em',
                 lineHeight: 1.05,
               }}
             >
               {t('about.sectionTitle')}
             </h2>
-            <p className="font-body text-ivory/50 font-light leading-relaxed max-w-sm" style={{ fontSize: '0.9375rem' }}>
+            <p
+              className="font-body text-bark-muted font-300 leading-relaxed max-w-sm"
+              style={{ fontSize: '0.9375rem' }}
+            >
               {t('about.sectionIntro')}
             </p>
           </div>
-          <span className="editorial-rule-full mt-8" />
+          <span className="hairline mt-8 block" />
         </div>
 
         {/* Two-column person grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
           <PersonCard person="rafael" index={0} />
           <PersonCard person="larissa" index={1} />
         </div>

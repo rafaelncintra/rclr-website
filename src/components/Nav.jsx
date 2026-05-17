@@ -26,17 +26,18 @@ export default function Nav() {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-400 ${
         scrolled
-          ? 'bg-obsidian-900/95 backdrop-blur-sm border-b border-ivory/5'
+          ? 'bg-sand/95 backdrop-blur-sm border-b border-border shadow-sm'
           : 'bg-transparent'
       }`}
     >
       <div className="max-w-editorial mx-auto px-6 lg:px-12 h-16 flex items-center justify-between">
-        {/* Logo */}
+        {/* Wordmark */}
         <a
           href="#"
-          className="font-display text-lg font-medium tracking-[0.12em] text-ivory hover:text-gold transition-colors duration-300"
+          className="font-display text-base font-500 tracking-[0.18em] text-bark hover:text-terra transition-colors duration-300"
+          style={{ letterSpacing: '0.2em' }}
         >
           RCLR
         </a>
@@ -54,7 +55,7 @@ export default function Nav() {
         <div className="flex items-center gap-4">
           <button
             onClick={toggleLang}
-            className="font-display text-[0.75rem] tracking-[0.15em] uppercase border border-ivory/20 text-ivory/50 hover:text-gold hover:border-gold/40 px-3 py-1.5 transition-all duration-300"
+            className="font-body text-[0.72rem] tracking-[0.14em] uppercase border border-border text-bark-muted hover:text-terra hover:border-terra/40 px-3 py-1.5 rounded-full transition-all duration-200"
             aria-label="Toggle language"
           >
             {t('lang.toggle')}
@@ -67,17 +68,17 @@ export default function Nav() {
             aria-label="Toggle menu"
           >
             <span
-              className={`block w-5 h-px bg-ivory/70 transition-transform duration-300 ${
+              className={`block w-5 h-px bg-bark/60 transition-transform duration-300 ${
                 menuOpen ? 'rotate-45 translate-y-2' : ''
               }`}
             />
             <span
-              className={`block w-5 h-px bg-ivory/70 transition-opacity duration-300 ${
+              className={`block w-5 h-px bg-bark/60 transition-opacity duration-300 ${
                 menuOpen ? 'opacity-0' : ''
               }`}
             />
             <span
-              className={`block w-5 h-px bg-ivory/70 transition-transform duration-300 ${
+              className={`block w-5 h-px bg-bark/60 transition-transform duration-300 ${
                 menuOpen ? '-rotate-45 -translate-y-2' : ''
               }`}
             />
@@ -87,11 +88,11 @@ export default function Nav() {
 
       {/* Mobile menu */}
       <div
-        className={`md:hidden overflow-hidden transition-all duration-500 ${
-          menuOpen ? 'max-h-64 border-b border-ivory/5' : 'max-h-0'
-        } bg-obsidian-800/98 backdrop-blur-sm`}
+        className={`md:hidden overflow-hidden transition-all duration-400 ${
+          menuOpen ? 'max-h-64 border-b border-border' : 'max-h-0'
+        } bg-sand/98 backdrop-blur-sm`}
       >
-        <nav className="flex flex-col px-6 py-4 gap-4">
+        <nav className="flex flex-col px-6 py-5 gap-5">
           {navLinks.map((link) => (
             <a
               key={link.key}
