@@ -2,7 +2,7 @@ backend:
   name: github
   repo: rafaelncintra/rclr-website
   branch: main
-  auth_type: implicit
+  auth_type: pkce
   app_id: Ov23liS866k4pANPozbO
 
 media_folder: public/images/uploads
