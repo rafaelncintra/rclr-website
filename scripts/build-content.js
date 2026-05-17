@@ -12,49 +12,68 @@ import matter from 'gray-matter'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const ROOT = join(__dirname, '..')
-const POSTS_DIR = join(ROOT, 'content', 'posts')
 const OUTPUT_DIR = join(ROOT, 'src', 'data')
-const OUTPUT_FILE = join(OUTPUT_DIR, 'posts.json')
 
-// Ensure output directory exists
 if (!existsSync(OUTPUT_DIR)) {
   mkdirSync(OUTPUT_DIR, { recursive: true })
 }
 
-// Gracefully handle missing posts directory
+// --- Posts ---
+const POSTS_DIR = join(ROOT, 'content', 'posts')
+const POSTS_FILE = join(OUTPUT_DIR, 'posts.json')
+
 if (!existsSync(POSTS_DIR)) {
-  console.log('No content/posts directory found — writing empty posts.json')
-  writeFileSync(OUTPUT_FILE, JSON.stringify([], null, 2), 'utf8')
-  process.exit(0)
+  writeFileSync(POSTS_FILE, JSON.stringify([], null, 2), 'utf8')
+} else {
+  const files = readdirSync(POSTS_DIR).filter((f) => f.endsWith('.md'))
+  const posts = files
+    .map((file) => {
+      const raw = readFileSync(join(POSTS_DIR, file), 'utf8')
+      const { data, content } = matter(raw)
+      const slug = basename(file, '.md')
+      return {
+        slug,
+        title: data.title || '',
+        date: data.date ? String(data.date).slice(0, 10) : '',
+        excerpt: data.excerpt || '',
+        lang: data.lang || 'pt',
+        published: data.published !== false,
+        body: content.trim(),
+      }
+    })
+    .filter((p) => p.published)
+    .sort((a, b) => (a.date < b.date ? 1 : a.date > b.date ? -1 : 0))
+  writeFileSync(POSTS_FILE, JSON.stringify(posts, null, 2), 'utf8')
+  console.log(`build-content: wrote ${posts.length} post(s) to src/data/posts.json`)
 }
 
-const files = readdirSync(POSTS_DIR).filter((f) => f.endsWith('.md'))
+// --- Talks ---
+const TALKS_DIR = join(ROOT, 'content', 'talks')
+const TALKS_FILE = join(OUTPUT_DIR, 'talks.json')
 
-if (files.length === 0) {
-  console.log('No markdown files found — writing empty posts.json')
-  writeFileSync(OUTPUT_FILE, JSON.stringify([], null, 2), 'utf8')
-  process.exit(0)
+if (!existsSync(TALKS_DIR)) {
+  writeFileSync(TALKS_FILE, JSON.stringify([], null, 2), 'utf8')
+} else {
+  const files = readdirSync(TALKS_DIR).filter((f) => f.endsWith('.md'))
+  const talks = files
+    .map((file) => {
+      const raw = readFileSync(join(TALKS_DIR, file), 'utf8')
+      const { data } = matter(raw)
+      const slug = basename(file, '.md')
+      return {
+        slug,
+        order: data.order ?? 999,
+        conference: data.conference || '',
+        year: String(data.year || ''),
+        international: data.international === true,
+        speakers: Array.isArray(data.speakers) ? data.speakers : [],
+        topic_pt: data.topic_pt || '',
+        topic_en: data.topic_en || '',
+        location_pt: data.location_pt || '',
+        location_en: data.location_en || '',
+      }
+    })
+    .sort((a, b) => a.order - b.order)
+  writeFileSync(TALKS_FILE, JSON.stringify(talks, null, 2), 'utf8')
+  console.log(`build-content: wrote ${talks.length} talk(s) to src/data/talks.json`)
 }
-
-const posts = files
-  .map((file) => {
-    const raw = readFileSync(join(POSTS_DIR, file), 'utf8')
-    const { data, content } = matter(raw)
-    const slug = basename(file, '.md')
-    return {
-      slug,
-      title: data.title || '',
-      date: data.date ? String(data.date).slice(0, 10) : '',
-      excerpt: data.excerpt || '',
-      lang: data.lang || 'pt',
-      published: data.published !== false,
-      body: content.trim(),
-    }
-  })
-  // Filter unpublished
-  .filter((p) => p.published)
-  // Sort newest first
-  .sort((a, b) => (a.date < b.date ? 1 : a.date > b.date ? -1 : 0))
-
-writeFileSync(OUTPUT_FILE, JSON.stringify(posts, null, 2), 'utf8')
-console.log(`build-content: wrote ${posts.length} post(s) to src/data/posts.json`)

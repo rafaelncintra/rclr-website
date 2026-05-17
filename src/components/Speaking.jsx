@@ -1,5 +1,6 @@
 import { useRef, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
+import talksData from '../data/talks.json'
 
 function useReveal() {
   const ref = useRef(null)
@@ -25,9 +26,14 @@ function useReveal() {
 }
 
 export default function Speaking() {
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
   const sectionRef = useReveal()
-  const talks = t('speaking.talks', { returnObjects: true })
+  const lang = i18n.language?.startsWith('pt') ? 'pt' : 'en'
+  const talks = talksData.map((talk) => ({
+    ...talk,
+    topic: talk[`topic_${lang}`],
+    location: talk[`location_${lang}`],
+  }))
 
   return (
     <section
@@ -73,7 +79,7 @@ export default function Speaking() {
 
           {talks.map((talk) => (
             <div
-              key={talk.id}
+              key={talk.slug}
               className="group border-b border-border/60 hover:bg-sand-300/40 transition-colors duration-150"
             >
               {/* Desktop row */}
