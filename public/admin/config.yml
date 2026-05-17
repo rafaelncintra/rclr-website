@@ -3,7 +3,7 @@ backend:
   repo: rafaelncintra/rclr-website
   branch: main
   auth_type: implicit
-  app_id: YOUR_GITHUB_OAUTH_APP_CLIENT_ID   # placeholder — fill with your GitHub OAuth App Client ID
+  app_id: Ov23liS866k4pANPozbO
 
 media_folder: public/images/uploads
 public_folder: /images/uploads
