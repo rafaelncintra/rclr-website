@@ -1,12 +1,12 @@
 ---
-order: 14
-conference: TDC Recife
+order: 15
+conference: TDC Porto Alegre Online
 year: "2020"
 international: false
 speakers:
   - Rafael
-topic_pt: Trilha Testes
-topic_en: Testing track
-location_pt: "Recife, Brasil"
-location_en: "Recife, Brazil"
+topic_pt: "DevOps: muito mais do que pipelines"
+topic_en: "DevOps: much more than pipelines"
+location_pt: "Porto Alegre, Brasil"
+location_en: "Porto Alegre, Brazil"
 ---

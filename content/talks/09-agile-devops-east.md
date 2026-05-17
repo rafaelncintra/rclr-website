@@ -1,5 +1,5 @@
 ---
-order: 9
+order: 12
 conference: Agile+DevOps East
 year: "2021"
 international: true
