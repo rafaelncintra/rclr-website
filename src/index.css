@@ -1,0 +1,98 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    margin: 0;
+    background-color: #0C0C0E;
+    color: #F4F0E8;
+    font-family: 'Newsreader', Georgia, serif;
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+
+  ::selection {
+    background-color: #C9A84C;
+    color: #0C0C0E;
+  }
+}
+
+@layer components {
+  .section-label {
+    @apply font-display text-[0.8125rem] font-medium tracking-[0.15em] uppercase text-gold;
+  }
+
+  .editorial-rule {
+    @apply block w-12 h-px bg-gold/60 my-6;
+  }
+
+  .editorial-rule-full {
+    @apply block w-full h-px bg-ivory/10 my-0;
+  }
+
+  .nav-link {
+    @apply font-body text-[0.8125rem] tracking-[0.1em] uppercase text-ivory/60 hover:text-ivory transition-colors duration-300;
+  }
+
+  .btn-ghost {
+    @apply inline-flex items-center gap-3 font-display text-sm tracking-[0.08em] uppercase border border-gold/40 text-gold px-6 py-3 hover:bg-gold/10 hover:border-gold transition-all duration-300;
+  }
+
+  .speaking-tag {
+    @apply inline-block font-body text-[0.75rem] tracking-[0.06em] px-2 py-0.5 border border-ivory/20 text-ivory/50;
+  }
+
+  .speaking-tag-intl {
+    @apply inline-block font-body text-[0.75rem] tracking-[0.06em] px-2 py-0.5 border border-gold/40 text-gold;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 4px;
+}
+::-webkit-scrollbar-track {
+  background: #0C0C0E;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(201, 168, 76, 0.25);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(201, 168, 76, 0.5);
+}
+
+/* Scroll reveal */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1),
+              transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s; }
+.reveal-delay-3 { transition-delay: 0.3s; }
+.reveal-delay-4 { transition-delay: 0.4s; }
+.reveal-delay-5 { transition-delay: 0.5s; }
