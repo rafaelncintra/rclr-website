@@ -2,8 +2,7 @@ backend:
   name: github
   repo: rafaelncintra/rclr-website
   branch: main
-  auth_type: pkce
-  app_id: Ov23liS866k4pANPozbO
+  base_url: https://rclr-oauth.rafael-a35.workers.dev
 
 media_folder: public/images/uploads
 public_folder: /images/uploads
