@@ -1,0 +1,331 @@
+[
+  {
+    "slug": "00-seleniumconf-2026",
+    "order": 0,
+    "conference": "SeleniumConf & AppiumConf 2026",
+    "year": "2026",
+    "international": true,
+    "speakers": [
+      "Rafael",
+      "Larissa"
+    ],
+    "topic_pt": "Smart Testing: Pick What Matters Most!",
+    "topic_en": "Smart Testing: Pick What Matters Most!",
+    "location_pt": "Valência, Espanha",
+    "location_en": "Valencia, Spain",
+    "description_pt": "Toda equipe enfrenta o mesmo desafio: testes demais, tempo e recursos de menos. Criamos um framework simples que coloca dois fatores em evidência — o quanto o teste importa para o usuário e o quão viável é automatizá-lo. Várias equipes já aplicaram e nos disseram que isso mudou completamente a forma como pensam em automação.",
+    "description_en": "Every team struggles with the same challenge: too many tests, not enough time or resources. We created a simple framework that puts two things in the spotlight: how much the test matters to the user and how realistic it is to automate it. Several teams have already tried it and told us it changed the way they think about test automation.",
+    "video_url": "",
+    "slides_url": "",
+    "show_detail": true
+  },
+  {
+    "slug": "01-tdc-2025",
+    "order": 1,
+    "conference": "TDC 2025",
+    "year": "2025",
+    "international": false,
+    "speakers": [
+      "Rafael"
+    ],
+    "topic_pt": "Coordenação de trilha e palestra — temas de engenharia moderna",
+    "topic_en": "Track coordinator and speaker — modern engineering topics",
+    "location_pt": "Brasil",
+    "location_en": "Brazil",
+    "description_pt": "",
+    "description_en": "",
+    "video_url": "",
+    "slides_url": "",
+    "show_detail": false
+  },
+  {
+    "slug": "02-tdc-summit-sp-2024",
+    "order": 2,
+    "conference": "TDC Summit SP 2024",
+    "year": "2024",
+    "international": false,
+    "speakers": [
+      "Rafael",
+      "Larissa"
+    ],
+    "topic_pt": "Humanos vs IA: continuando relevante nesta nova era",
+    "topic_en": "Humans vs AI: staying relevant in this new era",
+    "location_pt": "São Paulo, Brasil",
+    "location_en": "São Paulo, Brazil",
+    "description_pt": "",
+    "description_en": "",
+    "video_url": "",
+    "slides_url": "",
+    "show_detail": false
+  },
+  {
+    "slug": "03-leaddev",
+    "order": 3,
+    "conference": "LeadDev",
+    "year": "2024",
+    "international": true,
+    "speakers": [
+      "Rafael",
+      "Larissa"
+    ],
+    "topic_pt": "Instilling the Built-in Quality Mindset into a Dev Team",
+    "topic_en": "Instilling the Built-in Quality Mindset into a Dev Team",
+    "location_pt": "Global",
+    "location_en": "Global",
+    "description_pt": "",
+    "description_en": "",
+    "video_url": "",
+    "slides_url": "",
+    "show_detail": false
+  },
+  {
+    "slug": "04-testbash-spring",
+    "order": 4,
+    "conference": "TestBash Spring",
+    "year": "2023",
+    "international": true,
+    "speakers": [
+      "Rafael",
+      "Larissa"
+    ],
+    "topic_pt": "Qualidade intrínseca e cultura de engenharia",
+    "topic_en": "Built-in quality and engineering culture",
+    "location_pt": "Reino Unido / Online",
+    "location_en": "UK / Online",
+    "description_pt": "",
+    "description_en": "",
+    "video_url": "",
+    "slides_url": "",
+    "show_detail": false
+  },
+  {
+    "slug": "15-tdc-business-2022",
+    "order": 5,
+    "conference": "TDC Business 2022",
+    "year": "2022",
+    "international": false,
+    "speakers": [
+      "Rafael",
+      "Larissa"
+    ],
+    "topic_pt": "O valor da qualidade de software e priorização de testes",
+    "topic_en": "The value of software quality and test prioritization",
+    "location_pt": "Brasil",
+    "location_en": "Brazil",
+    "description_pt": "",
+    "description_en": "",
+    "video_url": "",
+    "slides_url": "",
+    "show_detail": false
+  },
+  {
+    "slug": "16-tdc-connections-2022",
+    "order": 6,
+    "conference": "TDC Connections 2022",
+    "year": "2022",
+    "international": false,
+    "speakers": [
+      "Larissa"
+    ],
+    "topic_pt": "Carreira e Protagonismo — você já tomou as rédeas da sua carreira?",
+    "topic_en": "Career and Ownership — have you taken the reins of your career?",
+    "location_pt": "Brasil",
+    "location_en": "Brazil",
+    "description_pt": "",
+    "description_en": "",
+    "video_url": "",
+    "slides_url": "",
+    "show_detail": false
+  },
+  {
+    "slug": "05-agile-testing-days",
+    "order": 7,
+    "conference": "Agile Testing Days",
+    "year": "2022",
+    "international": true,
+    "speakers": [
+      "Larissa"
+    ],
+    "topic_pt": "Lean digital transformation e qualidade",
+    "topic_en": "Lean digital transformation and quality",
+    "location_pt": "Potsdam, Alemanha",
+    "location_en": "Potsdam, Germany",
+    "description_pt": "",
+    "description_en": "",
+    "video_url": "",
+    "slides_url": "",
+    "show_detail": false
+  },
+  {
+    "slug": "06-testbash",
+    "order": 8,
+    "conference": "TestBash",
+    "year": "2022",
+    "international": true,
+    "speakers": [
+      "Larissa"
+    ],
+    "topic_pt": "Automação e qualidade de software",
+    "topic_en": "Software quality and automation",
+    "location_pt": "Reino Unido",
+    "location_en": "United Kingdom",
+    "description_pt": "",
+    "description_en": "",
+    "video_url": "",
+    "slides_url": "",
+    "show_detail": false
+  },
+  {
+    "slug": "07-ministry-of-testing-masterclass",
+    "order": 9,
+    "conference": "Ministry of Testing Masterclass",
+    "year": "2022",
+    "international": true,
+    "speakers": [
+      "Larissa"
+    ],
+    "topic_pt": "Engenharia de qualidade avançada",
+    "topic_en": "Advanced quality engineering",
+    "location_pt": "Online / Global",
+    "location_en": "Online / Global",
+    "description_pt": "",
+    "description_en": "",
+    "video_url": "",
+    "slides_url": "",
+    "show_detail": false
+  },
+  {
+    "slug": "11-tdc-2021",
+    "order": 10,
+    "conference": "TDC 2021",
+    "year": "2021",
+    "international": false,
+    "speakers": [
+      "Rafael",
+      "Larissa"
+    ],
+    "topic_pt": "Múltiplas trilhas — TDC Future, Transformation, Connections e Innovation",
+    "topic_en": "Multiple tracks — TDC Future, Transformation, Connections and Innovation",
+    "location_pt": "Brasil",
+    "location_en": "Brazil",
+    "description_pt": "",
+    "description_en": "",
+    "video_url": "",
+    "slides_url": "",
+    "show_detail": false
+  },
+  {
+    "slug": "08-agiletd-usa",
+    "order": 11,
+    "conference": "AgileTD USA",
+    "year": "2021",
+    "international": true,
+    "speakers": [
+      "Larissa"
+    ],
+    "topic_pt": "Agile engineering e transformação digital",
+    "topic_en": "Agile engineering and digital transformation",
+    "location_pt": "Estados Unidos",
+    "location_en": "United States",
+    "description_pt": "",
+    "description_en": "",
+    "video_url": "",
+    "slides_url": "",
+    "show_detail": false
+  },
+  {
+    "slug": "09-agile-devops-east",
+    "order": 12,
+    "conference": "Agile+DevOps East",
+    "year": "2021",
+    "international": true,
+    "speakers": [
+      "Larissa"
+    ],
+    "topic_pt": "DevOps e entrega contínua de qualidade",
+    "topic_en": "DevOps and continuous quality delivery",
+    "location_pt": "Estados Unidos",
+    "location_en": "United States",
+    "description_pt": "",
+    "description_en": "",
+    "video_url": "",
+    "slides_url": "",
+    "show_detail": false
+  },
+  {
+    "slug": "10-starwest",
+    "order": 13,
+    "conference": "Starwest",
+    "year": "2021",
+    "international": true,
+    "speakers": [
+      "Larissa"
+    ],
+    "topic_pt": "Estratégias de automação de testes",
+    "topic_en": "Test automation strategies",
+    "location_pt": "Estados Unidos",
+    "location_en": "United States",
+    "description_pt": "",
+    "description_en": "",
+    "video_url": "",
+    "slides_url": "",
+    "show_detail": false
+  },
+  {
+    "slug": "14-tdc-recife",
+    "order": 15,
+    "conference": "TDC Porto Alegre Online",
+    "year": "2020",
+    "international": false,
+    "speakers": [
+      "Rafael"
+    ],
+    "topic_pt": "DevOps: muito mais do que pipelines",
+    "topic_en": "DevOps: much more than pipelines",
+    "location_pt": "Porto Alegre, Brasil",
+    "location_en": "Porto Alegre, Brazil",
+    "description_pt": "",
+    "description_en": "",
+    "video_url": "",
+    "slides_url": "",
+    "show_detail": false
+  },
+  {
+    "slug": "13-agile-trends",
+    "order": 16,
+    "conference": "Agile Trends",
+    "year": "2020",
+    "international": false,
+    "speakers": [
+      "Rafael"
+    ],
+    "topic_pt": "Transformação ágil e DevOps",
+    "topic_en": "Agile transformation and DevOps",
+    "location_pt": "Brasil",
+    "location_en": "Brazil",
+    "description_pt": "",
+    "description_en": "",
+    "video_url": "",
+    "slides_url": "",
+    "show_detail": false
+  },
+  {
+    "slug": "17-tdc-porto-alegre-2019",
+    "order": 17,
+    "conference": "TDC Porto Alegre 2019",
+    "year": "2019",
+    "international": false,
+    "speakers": [
+      "Rafael"
+    ],
+    "topic_pt": "Construindo uma abordagem de testes mobile",
+    "topic_en": "Building a mobile testing approach",
+    "location_pt": "Porto Alegre, Brasil",
+    "location_en": "Porto Alegre, Brazil",
+    "description_pt": "",
+    "description_en": "",
+    "video_url": "",
+    "slides_url": "",
+    "show_detail": false
+  }
+]

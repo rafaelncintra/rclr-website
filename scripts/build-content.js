@@ -71,9 +71,28 @@ if (!existsSync(TALKS_DIR)) {
         topic_en: data.topic_en || '',
         location_pt: data.location_pt || '',
         location_en: data.location_en || '',
+        description_pt: data.description_pt || '',
+        description_en: data.description_en || '',
+        video_url: data.video_url || '',
+        slides_url: data.slides_url || '',
+        show_detail: data.show_detail === true,
       }
     })
     .sort((a, b) => a.order - b.order)
   writeFileSync(TALKS_FILE, JSON.stringify(talks, null, 2), 'utf8')
   console.log(`build-content: wrote ${talks.length} talk(s) to src/data/talks.json`)
+}
+
+// --- Settings (book, oculus) ---
+const SETTINGS_DIR = join(ROOT, 'content', 'settings')
+for (const name of ['book', 'oculus']) {
+  const file = join(SETTINGS_DIR, `${name}.yml`)
+  const outputFile = join(OUTPUT_DIR, `${name}.json`)
+  if (!existsSync(file)) {
+    writeFileSync(outputFile, JSON.stringify({ enabled: false }, null, 2), 'utf8')
+  } else {
+    const { data } = matter(readFileSync(file, 'utf8'))
+    writeFileSync(outputFile, JSON.stringify(data, null, 2), 'utf8')
+    console.log(`build-content: wrote src/data/${name}.json`)
+  }
 }

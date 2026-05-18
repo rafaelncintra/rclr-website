@@ -57,6 +57,21 @@ const resources = {
           location: 'Local',
           year: 'Ano',
         },
+        expand: 'Ver detalhes',
+        collapse: 'Fechar',
+        watchVideo: 'Assistir',
+        viewSlides: 'Slides',
+        stats: {
+          total: 'Palestras',
+          international: 'Internacionais',
+          years: 'Anos',
+        },
+      },
+      book: {
+        sectionLabel: 'Publicações',
+        by: 'por',
+        notifyCta: 'Em breve',
+        buyCta: 'Onde comprar',
       },
       writing: {
         sectionLabel: 'Publicações',
@@ -140,6 +155,21 @@ const resources = {
           location: 'Location',
           year: 'Year',
         },
+        expand: 'Details',
+        collapse: 'Close',
+        watchVideo: 'Watch',
+        viewSlides: 'Slides',
+        stats: {
+          total: 'Talks',
+          international: 'International',
+          years: 'Years',
+        },
+      },
+      book: {
+        sectionLabel: 'Publications',
+        by: 'by',
+        notifyCta: 'Coming soon',
+        buyCta: 'Where to buy',
       },
       writing: {
         sectionLabel: 'Writing',
