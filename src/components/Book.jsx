@@ -11,7 +11,7 @@ function useReveal() {
       (entries) => entries.forEach((e) => {
         if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target) }
       }),
-      { threshold: 0.08 }
+      { threshold: 0.06 }
     )
     el.querySelectorAll('.reveal').forEach((item) => observer.observe(item))
     return () => observer.disconnect()
@@ -19,65 +19,60 @@ function useReveal() {
   return ref
 }
 
-function BookCoverPlaceholder() {
+function BookCoverPlaceholder({ title, author }) {
   return (
-    <div
-      className="relative w-full max-w-[220px] mx-auto lg:mx-0"
-      style={{ aspectRatio: '2/3' }}
-    >
-      {/* Shadow */}
-      <div
-        className="absolute inset-0 rounded-sm"
+    <div className="relative" style={{ width: 200, aspectRatio: '2/3' }}>
+      {/* Page-turn shadow */}
+      <div className="absolute inset-0"
         style={{
-          boxShadow: '-12px 16px 40px rgba(0,0,0,0.45), -4px 4px 12px rgba(0,0,0,0.25)',
-          transform: 'perspective(800px) rotateY(8deg)',
-        }}
-      />
-      {/* Cover */}
-      <div
-        className="relative w-full h-full rounded-sm overflow-hidden"
+          boxShadow: '-20px 24px 64px rgba(0,0,0,0.75), -6px 6px 20px rgba(0,0,0,0.4)',
+          transform: 'perspective(900px) rotateY(12deg) translateX(6px)',
+          borderRadius: 2,
+        }} />
+
+      {/* Cover surface */}
+      <div className="relative w-full h-full overflow-hidden"
         style={{
-          background: 'linear-gradient(160deg, #2E2926 0%, #1A1714 100%)',
-          transform: 'perspective(800px) rotateY(8deg)',
-        }}
-      >
-        {/* Decorative lines */}
-        <div className="absolute inset-0" style={{ opacity: 0.12 }}>
-          {[0, 1, 2, 3, 4].map((i) => (
-            <div
-              key={i}
-              className="absolute left-0 right-0"
-              style={{
-                top: `${18 + i * 14}%`,
-                height: '1px',
-                background: '#F5F2EE',
-              }}
-            />
-          ))}
+          background: 'linear-gradient(165deg, #252019 0%, #1A1410 55%, #0F0D0A 100%)',
+          transform: 'perspective(900px) rotateY(12deg)',
+          borderRadius: 2,
+        }}>
+
+        {/* Decorative geometric mark */}
+        <div className="absolute" style={{ top: '14%', left: '14%', right: '14%' }}>
+          <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ opacity: 0.22 }}>
+            <circle cx="50" cy="50" r="46" stroke="#F5F2EE" strokeWidth="0.8"/>
+            <circle cx="50" cy="50" r="30" stroke="#C4633A" strokeWidth="0.8"/>
+            <line x1="50" y1="4" x2="50" y2="96" stroke="#F5F2EE" strokeWidth="0.6"/>
+            <line x1="4" y1="50" x2="96" y2="50" stroke="#F5F2EE" strokeWidth="0.6"/>
+            <circle cx="50" cy="50" r="6" fill="#C4633A" fillOpacity="0.6"/>
+          </svg>
         </div>
-        {/* Terra accent block */}
-        <div
-          className="absolute bottom-0 left-0 right-0"
-          style={{ height: '35%', background: 'linear-gradient(0deg, #C4633A 0%, transparent 100%)', opacity: 0.7 }}
-        />
-        {/* Placeholder text */}
-        <div className="absolute inset-0 flex flex-col justify-between p-5">
-          <div>
-            <div className="w-8 h-px bg-terra mb-4" />
-            <p className="font-body text-sand/30 text-[0.6rem] tracking-[0.2em] uppercase">Em breve</p>
-          </div>
-          <div>
-            <p className="font-display text-sand/90 leading-tight mb-2" style={{ fontSize: '0.95rem', letterSpacing: '-0.01em' }}>
-              {bookData.title_pt || 'Título do Livro'}
-            </p>
-            <p className="font-body text-sand/50 text-[0.6rem] tracking-[0.1em]">{bookData.author}</p>
-          </div>
+
+        {/* Terra gradient wash at bottom */}
+        <div className="absolute bottom-0 left-0 right-0"
+          style={{ height: '42%', background: 'linear-gradient(0deg, rgba(196,99,58,0.28) 0%, transparent 100%)' }} />
+
+        {/* Cover text */}
+        <div className="absolute bottom-0 left-0 right-0 p-5">
+          <div className="w-6 h-px mb-3" style={{ background: 'rgba(196,99,58,0.7)' }} />
+          <p className="font-display text-sand/90 leading-tight mb-2"
+            style={{ fontSize: '0.82rem', letterSpacing: '-0.01em' }}>
+            {title}
+          </p>
+          <p className="font-body text-sand/40"
+            style={{ fontSize: '0.58rem', letterSpacing: '0.1em' }}>
+            {author}
+          </p>
         </div>
+
         {/* Spine highlight */}
-        <div
-          className="absolute left-0 top-0 bottom-0 w-[3px]"
-          style={{ background: 'linear-gradient(180deg, rgba(245,242,238,0.15) 0%, rgba(245,242,238,0.04) 100%)' }}
-        />
+        <div className="absolute left-0 top-0 bottom-0 w-[2px]"
+          style={{ background: 'linear-gradient(180deg, rgba(245,242,238,0.12) 0%, rgba(245,242,238,0.03) 100%)' }} />
+
+        {/* Top edge light */}
+        <div className="absolute top-0 left-0 right-0 h-[1px]"
+          style={{ background: 'rgba(245,242,238,0.08)' }} />
       </div>
     </div>
   )
@@ -92,59 +87,103 @@ export default function Book() {
 
   const title = bookData[`title_${lang}`] || bookData.title_pt
   const synopsis = bookData[`synopsis_${lang}`] || bookData.synopsis_pt
+  const forthcoming = lang === 'pt' ? 'Próximo lançamento' : 'Forthcoming'
 
   return (
-    <section id="livro" className="py-24 lg:py-36 bg-bark text-sand" ref={sectionRef}>
-      {/* Subtle grain on dark background */}
-      <div className="relative max-w-editorial mx-auto px-6 lg:px-12">
-        <div className="lg:grid lg:grid-cols-[1fr_auto] lg:gap-20 lg:items-center">
+    <section id="livro" className="relative overflow-hidden py-28 lg:py-44" style={{ background: '#141210' }} ref={sectionRef}>
 
-          {/* Text column */}
+      {/* Warm atmospheric glow */}
+      <div className="absolute inset-0 pointer-events-none"
+        style={{ background: 'radial-gradient(ellipse 70% 55% at 20% 65%, rgba(196,99,58,0.09) 0%, transparent 65%)' }} />
+
+      {/* Decorative large text watermark */}
+      <div className="absolute inset-0 flex items-center justify-end pointer-events-none select-none overflow-hidden"
+        style={{ paddingRight: '4%' }}>
+        <span className="font-display font-300"
+          style={{ fontSize: 'clamp(14rem, 24vw, 22rem)', letterSpacing: '-0.04em', lineHeight: 1, color: 'rgba(245,242,238,0.018)', userSelect: 'none' }}>
+          libro
+        </span>
+      </div>
+
+      <div className="relative max-w-editorial mx-auto px-6 lg:px-12">
+
+        {/* Centered announcement rule */}
+        <div className="reveal flex items-center gap-5 mb-20">
+          <div className="flex-1 h-px" style={{ background: 'rgba(245,242,238,0.08)' }} />
+          <span className="font-body text-[0.62rem] tracking-[0.24em] uppercase" style={{ color: 'rgba(196,99,58,0.55)' }}>
+            {t('book.sectionLabel')}
+          </span>
+          <div className="flex-1 h-px" style={{ background: 'rgba(245,242,238,0.08)' }} />
+        </div>
+
+        <div className="lg:grid lg:grid-cols-[auto_1fr] lg:gap-24 lg:items-start">
+
+          {/* ── Cover ─────────────────────────────────────────── */}
+          <div className="reveal flex justify-center lg:justify-start mb-16 lg:mb-0 lg:pt-1">
+            {bookData.cover_image ? (
+              <div className="relative" style={{ width: 200 }}>
+                <div className="absolute inset-0"
+                  style={{ boxShadow: '-20px 24px 64px rgba(0,0,0,0.75)', transform: 'perspective(900px) rotateY(12deg) translateX(6px)', borderRadius: 2 }} />
+                <img src={bookData.cover_image} alt={title} className="relative w-full"
+                  style={{ transform: 'perspective(900px) rotateY(12deg)', borderRadius: 2, boxShadow: '-4px 8px 32px rgba(0,0,0,0.5)' }} />
+              </div>
+            ) : (
+              <BookCoverPlaceholder title={title} author={bookData.author} />
+            )}
+          </div>
+
+          {/* ── Text ──────────────────────────────────────────── */}
           <div>
-            <div className="reveal mb-10">
-              <p className="section-label text-terra mb-4">{t('book.sectionLabel')}</p>
-              <h2
-                className="font-display font-300 text-sand leading-tight mb-2"
-                style={{ fontSize: 'clamp(2rem, 5vw, 4rem)', letterSpacing: '-0.02em', lineHeight: 1.05 }}
-              >
-                {title}
-              </h2>
-              <p className="font-body text-sand/50 font-300 text-sm tracking-wide">{t('book.by')} {bookData.author}</p>
+
+            {/* Forthcoming badge */}
+            <div className="reveal flex items-center gap-3 mb-7">
+              <span className="w-1.5 h-1.5 rounded-full" style={{ background: '#C4633A', opacity: 0.7 }} />
+              <span className="font-body text-[0.62rem] tracking-[0.22em] uppercase" style={{ color: 'rgba(196,99,58,0.6)' }}>
+                {forthcoming}
+              </span>
             </div>
 
-            <div className="hairline-short reveal" style={{ background: 'rgba(196,99,58,0.4)' }} />
+            {/* Title */}
+            <div className="reveal mb-2">
+              <h2 className="font-display font-300 leading-tight"
+                style={{ fontSize: 'clamp(2.4rem, 5.5vw, 4.2rem)', letterSpacing: '-0.025em', lineHeight: 1.04, color: 'rgba(245,242,238,0.92)' }}>
+                {title}
+              </h2>
+            </div>
 
-            <p className="reveal reveal-delay-1 font-body text-sand/70 font-300 leading-relaxed max-w-prose-md mt-6 mb-10" style={{ fontSize: '1rem' }}>
+            {/* Author */}
+            <p className="reveal reveal-delay-1 font-body font-300 mb-8"
+              style={{ fontSize: '0.85rem', letterSpacing: '0.06em', color: 'rgba(245,242,238,0.35)' }}>
+              {t('book.by')}{' '}
+              <span style={{ color: 'rgba(245,242,238,0.55)' }}>{bookData.author}</span>
+            </p>
+
+            {/* Divider */}
+            <div className="reveal h-px mb-8" style={{ background: 'rgba(245,242,238,0.08)', maxWidth: '46ch' }} />
+
+            {/* Synopsis */}
+            <p className="reveal reveal-delay-1 font-body font-300 leading-relaxed mb-12"
+              style={{ fontSize: '0.9375rem', color: 'rgba(245,242,238,0.5)', maxWidth: '44ch', lineHeight: 1.75 }}>
               {synopsis}
             </p>
 
+            {/* CTA */}
             <div className="reveal reveal-delay-2">
               {bookData.notify_url ? (
-                <a href={bookData.notify_url} target="_blank" rel="noopener noreferrer" className="btn-primary">
+                <a href={bookData.notify_url} target="_blank" rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2.5 font-body text-[0.78rem] tracking-[0.1em] uppercase px-7 py-3.5 rounded-full transition-all duration-200"
+                  style={{ background: 'rgba(196,99,58,0.9)', color: 'rgba(245,242,238,0.95)' }}>
                   {t('book.buyCta')}
                 </a>
               ) : (
-                <span className="inline-flex items-center gap-2.5 font-body text-[0.8125rem] font-500 tracking-[0.07em] uppercase border border-sand/20 text-sand/60 px-6 py-3 rounded-full cursor-default">
+                <span className="inline-flex items-center gap-3 font-body text-[0.75rem] tracking-[0.14em] uppercase rounded-full"
+                  style={{ border: '1px solid rgba(245,242,238,0.12)', color: 'rgba(245,242,238,0.3)', padding: '0.875rem 1.75rem', cursor: 'default' }}>
+                  <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: 'rgba(196,99,58,0.6)' }} />
                   {t('book.notifyCta')}
                 </span>
               )}
             </div>
-          </div>
 
-          {/* Cover column */}
-          <div className="reveal reveal-delay-1 mt-14 lg:mt-0 flex justify-center lg:justify-end">
-            {bookData.cover_image ? (
-              <div style={{ transform: 'perspective(800px) rotateY(8deg)', maxWidth: 220 }}>
-                <img
-                  src={bookData.cover_image}
-                  alt={title}
-                  className="w-full rounded-sm"
-                  style={{ boxShadow: '-12px 16px 40px rgba(0,0,0,0.45)' }}
-                />
-              </div>
-            ) : (
-              <BookCoverPlaceholder />
-            )}
           </div>
         </div>
       </div>
