@@ -7,8 +7,8 @@ const resources = {
     translation: {
       nav: {
         about: 'Sobre',
+        book: 'Livro',
         speaking: 'Palestras',
-        writing: 'Publicações',
         contact: 'Contato',
       },
       lang: {
@@ -105,8 +105,8 @@ const resources = {
     translation: {
       nav: {
         about: 'About',
+        book: 'Book',
         speaking: 'Speaking',
-        writing: 'Writing',
         contact: 'Contact',
       },
       lang: {

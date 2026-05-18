@@ -15,8 +15,8 @@
 
   body {
     margin: 0;
-    background-color: #F5F2EE;
-    color: #1A1714;
+    background-color: #1A1714;
+    color: rgba(245,242,238,0.85);
     font-family: 'Outfit', system-ui, sans-serif;
     font-weight: 400;
     overflow-x: hidden;
@@ -36,16 +36,22 @@
 
   /* Horizontal rules */
   .hairline {
-    @apply block w-full h-px bg-border my-0;
+    @apply block w-full h-px my-0;
+    background: rgba(245,242,238,0.1);
   }
 
   .hairline-short {
-    @apply block w-10 h-px bg-terra/50 my-6;
+    @apply block w-10 h-px my-6;
+    background: rgba(196,99,58,0.45);
   }
 
   /* Navigation link */
   .nav-link {
-    @apply font-body text-[0.78rem] tracking-[0.09em] uppercase text-bark-muted hover:text-bark transition-colors duration-200;
+    @apply font-body text-[0.78rem] tracking-[0.09em] uppercase transition-colors duration-200;
+    color: rgba(245,242,238,0.4);
+  }
+  .nav-link:hover {
+    color: rgba(245,242,238,0.85);
   }
 
   /* Buttons */
@@ -54,21 +60,31 @@
   }
 
   .btn-outline {
-    @apply inline-flex items-center gap-2.5 font-body text-[0.8125rem] font-500 tracking-[0.07em] uppercase border border-border text-bark-muted px-6 py-3 rounded-full hover:border-terra/50 hover:text-terra transition-all duration-200;
+    @apply inline-flex items-center gap-2.5 font-body text-[0.8125rem] font-500 tracking-[0.07em] uppercase px-6 py-3 rounded-full transition-all duration-200;
+    border: 1px solid rgba(245,242,238,0.15);
+    color: rgba(245,242,238,0.45);
+  }
+  .btn-outline:hover {
+    border-color: rgba(196,99,58,0.5);
+    color: #C4633A;
   }
 
-  /* Cards */
+  /* Cards — elevated dark surface */
   .card {
-    @apply bg-sand-200 rounded-2xl shadow-card border border-sand-400/60;
+    @apply rounded-2xl;
+    background: #201C18;
+    border: 1px solid rgba(245,242,238,0.08);
   }
 
   .card-hover {
-    @apply hover:shadow-card-hover hover:-translate-y-0.5 transition-all duration-300;
+    @apply hover:-translate-y-0.5 transition-all duration-300;
   }
 
   /* Tags */
   .tag {
-    @apply inline-block font-body text-[0.68rem] tracking-[0.06em] px-2.5 py-1 rounded-full bg-sand-300 text-bark-muted;
+    @apply inline-block font-body text-[0.68rem] tracking-[0.06em] px-2.5 py-1 rounded-full;
+    background: rgba(245,242,238,0.07);
+    color: rgba(245,242,238,0.45);
   }
 
   .tag-terra {
