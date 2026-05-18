@@ -1,10 +1,8 @@
----
-enabled: false
-title_pt: "Título do Livro"
-title_en: "Book Title"
-author: "Larissa Rosochansky"
-synopsis_pt: "Sinopse em breve."
-synopsis_en: "Synopsis coming soon."
+enabled: true
+title_pt: Título do Livro
+title_en: Book Title
+author: Larissa Rosochansky
+synopsis_pt: Sinopse em breve.
+synopsis_en: Synopsis coming soon.
 cover_image: ""
 notify_url: ""
----
