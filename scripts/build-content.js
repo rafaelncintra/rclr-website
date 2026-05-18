@@ -91,7 +91,10 @@ for (const name of ['book', 'oculus']) {
   if (!existsSync(file)) {
     writeFileSync(outputFile, JSON.stringify({ enabled: false }, null, 2), 'utf8')
   } else {
-    const { data } = matter(readFileSync(file, 'utf8'))
+    const raw = readFileSync(file, 'utf8')
+    // CMS saves .yml files as pure YAML (no --- delimiters); wrap for gray-matter
+    const wrapped = raw.trimStart().startsWith('---') ? raw : `---\n${raw}\n---`
+    const { data } = matter(wrapped)
     writeFileSync(outputFile, JSON.stringify(data, null, 2), 'utf8')
     console.log(`build-content: wrote src/data/${name}.json`)
   }
