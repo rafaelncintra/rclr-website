@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react'
-import { signInWithPopup, signOut, onAuthStateChanged } from 'firebase/auth'
+import { signInWithRedirect, getRedirectResult, signOut, onAuthStateChanged } from 'firebase/auth'
 import {
   collection, getDocs, doc, setDoc, deleteDoc, addDoc,
   Timestamp, getDoc,
@@ -110,7 +110,16 @@ function Select({ label, value, onChange, options }) {
 // ─── Auth ────────────────────────────────────────────────────────────────────
 
 function LoginScreen({ wrongEmail }) {
-  const login = () => signInWithPopup(auth, googleProvider).catch(console.error)
+  const [error, setError] = useState(null)
+  const [loading, setLoading] = useState(false)
+  const login = () => {
+    setError(null)
+    setLoading(true)
+    signInWithRedirect(auth, googleProvider).catch(err => {
+      setError(err.message)
+      setLoading(false)
+    })
+  }
   return (
     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '100vh', background: 'var(--bg)' }}>
       <div style={{ border: '1px solid var(--border)', background: 'var(--surface)', padding: 48, maxWidth: 360, width: '100%' }}>
@@ -129,8 +138,13 @@ function LoginScreen({ wrongEmail }) {
             Entre com a sua conta Google para acessar o painel.
           </p>
         )}
-        <button onClick={login} style={{ ...S.btn('primary'), width: '100%', padding: '12px', fontSize: 13 }}>
-          $ google_login →
+        {error && (
+          <p style={{ fontSize: 12, color: '#ff5050', margin: '0 0 16px', fontFamily: MONO, lineHeight: 1.5 }}>
+            // erro: {error}
+          </p>
+        )}
+        <button onClick={login} disabled={loading} style={{ ...S.btn('primary'), width: '100%', padding: '12px', fontSize: 13 }}>
+          {loading ? '// redirecionando...' : '$ google_login →'}
         </button>
       </div>
     </div>
@@ -759,6 +773,7 @@ export default function AdminPage() {
   const [authError, setAuthError] = useState(null)
 
   useEffect(() => {
+    getRedirectResult(auth).catch(err => setAuthError(err.message))
     try {
       const unsub = onAuthStateChanged(auth, setUser, (err) => setAuthError(err.message))
       return unsub
