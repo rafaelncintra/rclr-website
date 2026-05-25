@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react'
-import { signInWithRedirect, getRedirectResult, signOut, onAuthStateChanged } from 'firebase/auth'
+import { signInWithPopup, signInWithRedirect, getRedirectResult, signOut, onAuthStateChanged } from 'firebase/auth'
 import {
   collection, getDocs, doc, setDoc, deleteDoc, addDoc,
   Timestamp, getDoc,
@@ -112,13 +112,23 @@ function Select({ label, value, onChange, options }) {
 function LoginScreen({ wrongEmail }) {
   const [error, setError] = useState(null)
   const [loading, setLoading] = useState(false)
-  const login = () => {
+  const login = async () => {
     setError(null)
     setLoading(true)
-    signInWithRedirect(auth, googleProvider).catch(err => {
-      setError(err.message)
-      setLoading(false)
-    })
+    try {
+      await signInWithPopup(auth, googleProvider)
+    } catch (err) {
+      if (err.code === 'auth/popup-blocked') {
+        // popup blocked → fall back to full-page redirect
+        signInWithRedirect(auth, googleProvider).catch(e => {
+          setError(e.message)
+          setLoading(false)
+        })
+      } else {
+        setError(`${err.code}: ${err.message}`)
+        setLoading(false)
+      }
+    }
   }
   return (
     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '100vh', background: 'var(--bg)' }}>
