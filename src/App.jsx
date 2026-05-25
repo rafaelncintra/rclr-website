@@ -20,7 +20,10 @@ export const ThemeContext = createContext({ light: false, accent: '#7CFFB2' })
 export function useTheme() { return useContext(ThemeContext) }
 
 function useHashRoute() {
-  const [hash, setHash] = useState(() => window.location.hash || '#/')
+  const [hash, setHash] = useState(() => {
+    if (window.location.pathname === '/admin') return '#/admin'
+    return window.location.hash || '#/'
+  })
   useEffect(() => {
     const handler = () => setHash(window.location.hash || '#/')
     window.addEventListener('hashchange', handler)
