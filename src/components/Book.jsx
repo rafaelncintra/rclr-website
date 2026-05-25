@@ -1,84 +1,105 @@
-import { useRef, useEffect } from 'react'
-import { useTranslation } from 'react-i18next'
-import bookData from '../data/book.json'
+const MONO = '"JetBrains Mono", monospace'
+const SANS = '"Geist", "Inter Tight", system-ui, sans-serif'
+const SERIF = '"Newsreader", Georgia, serif'
 
-function useReveal() {
-  const ref = useRef(null)
-  useEffect(() => {
-    const el = ref.current
-    if (!el) return
-    const observer = new IntersectionObserver(
-      (entries) => entries.forEach((e) => {
-        if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target) }
-      }),
-      { threshold: 0.1 }
-    )
-    el.querySelectorAll('.reveal').forEach((item) => observer.observe(item))
-    return () => observer.disconnect()
-  }, [])
-  return ref
-}
+const chapters = [
+  '01 · Como nasce um time que entende risco',
+  '02 · O custo invisível de empurrar testes pro final',
+  '03 · IA, automação e o que continua sendo humano',
+  '04 · Métricas que dizem a verdade',
+]
 
 export default function Book() {
-  const { t, i18n } = useTranslation()
-  const sectionRef = useReveal()
-  const lang = i18n.language?.startsWith('pt') ? 'pt' : 'en'
-
-  if (!bookData.enabled) return null
-
-  const title = bookData[`title_${lang}`] || bookData.title_pt
-  const synopsis = bookData[`synopsis_${lang}`] || bookData.synopsis_pt
-
   return (
-    <section id="livro" className="py-16 lg:py-24" ref={sectionRef}>
-      <div className="max-w-editorial mx-auto px-6 lg:px-12">
-
-        <p className="reveal section-label mb-8">{t('book.sectionLabel')}</p>
-
-        <div className="lg:grid lg:grid-cols-[1fr_auto] lg:gap-20 lg:items-start">
-
+    <section id="livros" style={{
+      padding: 'clamp(64px, 8vw, 96px) clamp(24px, 4vw, 48px)',
+      borderTop: '1px solid var(--border)',
+    }}>
+      <div style={{
+        display: 'grid',
+        gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+        gap: 'clamp(40px, 6vw, 80px)',
+        alignItems: 'center',
+      }}>
+        {/* Book cover */}
+        <div style={{
+          border: '1px solid var(--border)',
+          position: 'relative',
+          aspectRatio: '3 / 4',
+          background: 'var(--bg)',
+          backgroundImage: 'radial-gradient(circle at 30% 20%, rgba(124,255,178,0.06), transparent 60%)',
+          display: 'flex', flexDirection: 'column',
+          padding: 36,
+        }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+            <div style={{ fontFamily: MONO, fontSize: 11, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--accent)' }}>rclr · 01</div>
+            <div style={{ fontFamily: MONO, fontSize: 11, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--fg-soft)' }}>v0.1.0-beta</div>
+          </div>
+          <div style={{ flex: 1, display: 'flex', alignItems: 'center' }}>
+            <h3 style={{
+              fontFamily: SANS, fontSize: 'clamp(1.8rem, 4vw, 3rem)',
+              lineHeight: 0.95, fontWeight: 600,
+              letterSpacing: '-0.03em', margin: 0, color: 'var(--fg)',
+            }}>
+              Qualidade<br />
+              <span style={{ color: 'var(--accent)' }}>antes</span><br />
+              do pipeline.
+            </h3>
+          </div>
           <div>
-            <h2 className="reveal font-display font-300 mb-2"
-              style={{ fontSize: 'clamp(2rem, 4.5vw, 3.6rem)', letterSpacing: '-0.02em', lineHeight: 1.05, color: 'rgba(245,242,238,0.9)' }}>
-              {title}
-            </h2>
-
-            <p className="reveal reveal-delay-1 font-body mb-8"
-              style={{ fontSize: '0.82rem', letterSpacing: '0.04em', color: 'rgba(245,242,238,0.4)' }}>
-              {t('book.by')} {bookData.author}
-            </p>
-
-            <div className="reveal h-px mb-8" style={{ background: 'rgba(245,242,238,0.08)', maxWidth: '52ch' }} />
-
-            <p className="reveal reveal-delay-1 font-body font-300 leading-relaxed mb-10"
-              style={{ fontSize: '0.9375rem', color: 'rgba(245,242,238,0.5)', maxWidth: '50ch', lineHeight: 1.8 }}>
-              {synopsis}
-            </p>
-
-            <div className="reveal reveal-delay-2">
-              {bookData.notify_url ? (
-                <a href={bookData.notify_url} target="_blank" rel="noopener noreferrer" className="btn-primary">
-                  {t('book.buyCta')}
-                </a>
-              ) : (
-                <span className="font-body text-[0.75rem] tracking-[0.14em] uppercase px-6 py-3 rounded-full"
-                  style={{ border: '1px solid rgba(245,242,238,0.12)', color: 'rgba(245,242,238,0.3)', cursor: 'default' }}>
-                  {t('book.notifyCta')}
-                </span>
-              )}
+            <div style={{ fontFamily: MONO, fontSize: 12, color: 'var(--fg-mid)' }}>
+              R. N. Cintra &amp; L. Rosochansky
+            </div>
+            <div style={{ fontFamily: MONO, fontSize: 10, color: 'var(--fg-dim)', marginTop: 4 }}>
+              2026 · pré-venda
             </div>
           </div>
-
-          {bookData.cover_image && (
-            <div className="reveal reveal-delay-1 mt-10 lg:mt-0">
-              <img src={bookData.cover_image} alt={title}
-                className="rounded-sm"
-                style={{ width: 200, boxShadow: '0 20px 60px rgba(0,0,0,0.5)' }} />
-            </div>
-          )}
         </div>
 
-        <div className="mt-16 lg:mt-20" style={{ borderBottom: '1px solid rgba(245,242,238,0.08)' }} />
+        {/* Book details */}
+        <div>
+          <div style={{ fontFamily: MONO, fontSize: 11, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--accent)' }}>
+            {'// 03 · livro_01'}
+          </div>
+          <h2 style={{
+            fontFamily: SANS, fontSize: 'clamp(2rem, 5vw, 3.75rem)',
+            lineHeight: 1, fontWeight: 600, letterSpacing: '-0.03em',
+            margin: '16px 0 24px', color: 'var(--fg)',
+          }}>
+            Primeiro livro.<br />
+            <span style={{ color: 'var(--fg-soft)' }}>Em pré-venda.</span>
+          </h2>
+          <p style={{ fontSize: 18, lineHeight: 1.55, color: 'var(--fg-mid)', margin: '0 0 32px', fontFamily: SERIF }}>
+            Quinze anos construindo plataformas de teste e cultura de qualidade,
+            condensados num livro prático sobre o que faz times de engenharia
+            entregarem software confiável — sem heróis e sem manuais.
+          </p>
+
+          {/* Chapter list */}
+          <div style={{ marginBottom: 32, fontFamily: MONO, fontSize: 13 }}>
+            {chapters.map((line, i) => (
+              <div key={i} style={{
+                padding: '12px 0', borderBottom: '1px solid var(--border)',
+                color: 'var(--fg-mid)',
+              }}>
+                <span style={{ color: 'var(--accent)' }}>{'$'}</span> {line}
+              </div>
+            ))}
+          </div>
+
+          <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
+            <a href="#contato" style={{
+              fontFamily: MONO, fontSize: 13, padding: '14px 22px',
+              background: 'var(--accent)', color: 'var(--accent-ink)',
+              textDecoration: 'none', fontWeight: 500,
+            }}>$ notify_me</a>
+            <a href="#" style={{
+              fontFamily: MONO, fontSize: 13, padding: '14px 22px',
+              border: '1px solid var(--border)', color: 'var(--fg)',
+              textDecoration: 'none',
+            }}>cat sample.md</a>
+          </div>
+        </div>
       </div>
     </section>
   )

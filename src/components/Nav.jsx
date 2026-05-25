@@ -1,106 +1,132 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { useTheme } from '../App'
+
+const MONO = '"JetBrains Mono", monospace'
 
 export default function Nav() {
-  const { t, i18n } = useTranslation()
-  const [scrolled, setScrolled] = useState(false)
+  const { light, setLight } = useTheme()
+  const { i18n } = useTranslation()
   const [menuOpen, setMenuOpen] = useState(false)
 
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 40)
-    window.addEventListener('scroll', onScroll, { passive: true })
-    return () => window.removeEventListener('scroll', onScroll)
-  }, [])
-
   const toggleLang = () => {
-    const next = i18n.language === 'pt' ? 'en' : 'pt'
-    i18n.changeLanguage(next)
+    i18n.changeLanguage(i18n.language === 'pt' ? 'en' : 'pt')
   }
 
-  const navLinks = [
-    { key: 'about', href: '#sobre' },
-    { key: 'book',  href: '#livro' },
-    { key: 'speaking', href: '#palestras' },
-    { key: 'contact', href: '#contato' },
+  const links = [
+    ['./sobre', '#sobre'],
+    ['./palestras', '#palestras'],
+    ['./livros', '#livros'],
+    ['./blog', '#blog'],
+    ['./agenda', '#agenda'],
+    ['./contato', '#contato'],
   ]
 
-  const borderStyle = scrolled ? '1px solid rgba(245,242,238,0.08)' : '1px solid transparent'
-
   return (
-    <header
-      className="fixed top-0 left-0 right-0 z-50 transition-all duration-400"
-      style={{
-        background: scrolled ? 'rgba(26,23,20,0.94)' : 'transparent',
-        backdropFilter: scrolled ? 'blur(12px)' : 'none',
-        borderBottom: borderStyle,
-      }}
-    >
-      <div className="max-w-editorial mx-auto px-6 lg:px-12 h-16 flex items-center justify-between">
-        {/* Wordmark */}
-        <a
-          href="#"
-          className="font-display font-500 tracking-[0.2em] transition-colors duration-300"
-          style={{ fontSize: '1rem', color: 'rgba(245,242,238,0.75)' }}
-          onMouseEnter={e => e.currentTarget.style.color = '#C4633A'}
-          onMouseLeave={e => e.currentTarget.style.color = 'rgba(245,242,238,0.75)'}
-        >
-          RCLR
+    <header style={{
+      padding: '16px 48px',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      borderBottom: '1px solid var(--border)',
+      background: 'var(--nav-bg)',
+      backdropFilter: 'blur(8px)',
+      position: 'sticky',
+      top: 0,
+      zIndex: 50,
+    }}>
+      {/* Logo + status */}
+      <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
+        <a href="#/" style={{
+          fontFamily: MONO, fontSize: 13, fontWeight: 500,
+          padding: '6px 10px', border: '1px solid var(--border)',
+          color: 'var(--accent)', textDecoration: 'none',
+        }}>
+          rclr<span style={{ color: 'var(--fg)' }}>.com</span>
         </a>
-
-        {/* Desktop nav */}
-        <nav className="hidden md:flex items-center gap-8">
-          {navLinks.map((link) => (
-            <a key={link.key} href={link.href} className="nav-link">
-              {t(`nav.${link.key}`)}
-            </a>
-          ))}
-        </nav>
-
-        {/* Lang toggle + mobile menu */}
-        <div className="flex items-center gap-4">
-          <button
-            onClick={toggleLang}
-            className="font-body text-[0.72rem] tracking-[0.14em] uppercase px-3 py-1.5 rounded-full transition-all duration-200"
-            style={{ border: '1px solid rgba(245,242,238,0.15)', color: 'rgba(245,242,238,0.4)' }}
-            aria-label="Toggle language"
-          >
-            {t('lang.toggle')}
-          </button>
-
-          {/* Mobile hamburger */}
-          <button
-            className="md:hidden flex flex-col gap-1.5 p-1"
-            onClick={() => setMenuOpen(!menuOpen)}
-            aria-label="Toggle menu"
-          >
-            <span className={`block w-5 h-px transition-transform duration-300 ${menuOpen ? 'rotate-45 translate-y-2' : ''}`}
-              style={{ background: 'rgba(245,242,238,0.5)' }} />
-            <span className={`block w-5 h-px transition-opacity duration-300 ${menuOpen ? 'opacity-0' : ''}`}
-              style={{ background: 'rgba(245,242,238,0.5)' }} />
-            <span className={`block w-5 h-px transition-transform duration-300 ${menuOpen ? '-rotate-45 -translate-y-2' : ''}`}
-              style={{ background: 'rgba(245,242,238,0.5)' }} />
-          </button>
+        <div style={{ fontFamily: MONO, fontSize: 11, color: 'var(--fg-dim)', display: 'none' }} className="md:block">
+          <span style={{ color: 'var(--accent)' }}>●</span> online · v3.1
         </div>
       </div>
 
-      {/* Mobile menu */}
-      <div
-        className={`md:hidden overflow-hidden transition-all duration-400 ${menuOpen ? 'max-h-64' : 'max-h-0'}`}
-        style={{ background: 'rgba(26,23,20,0.97)', borderBottom: menuOpen ? '1px solid rgba(245,242,238,0.08)' : 'none' }}
-      >
-        <nav className="flex flex-col px-6 py-5 gap-5">
-          {navLinks.map((link) => (
-            <a
-              key={link.key}
-              href={link.href}
-              className="nav-link py-1"
-              onClick={() => setMenuOpen(false)}
-            >
-              {t(`nav.${link.key}`)}
-            </a>
-          ))}
-        </nav>
+      {/* Desktop nav */}
+      <nav className="hidden md:flex" style={{ gap: 4, fontFamily: MONO, fontSize: 12 }}>
+        {links.map(([label, href]) => (
+          <a key={label} href={href} style={{
+            color: 'var(--fg-mid)',
+            padding: '6px 10px',
+            textDecoration: 'none',
+            borderRadius: 4,
+            transition: 'color 0.15s',
+          }}
+          onMouseEnter={e => e.currentTarget.style.color = 'var(--accent)'}
+          onMouseLeave={e => e.currentTarget.style.color = 'var(--fg-mid)'}
+          >{label}</a>
+        ))}
+      </nav>
+
+      {/* Right controls */}
+      <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+        {/* Lang toggle */}
+        <button onClick={toggleLang} style={{
+          fontFamily: MONO, fontSize: 11, color: 'var(--fg-dim)',
+          background: 'none', border: '1px solid var(--border)',
+          padding: '5px 10px', cursor: 'pointer',
+        }}>
+          {i18n.language === 'pt' ? 'EN' : 'PT'}
+        </button>
+
+        {/* Light/dark toggle */}
+        <button onClick={() => setLight(!light)} style={{
+          fontFamily: MONO, fontSize: 11, color: 'var(--fg-dim)',
+          background: 'none', border: '1px solid var(--border)',
+          padding: '5px 10px', cursor: 'pointer',
+        }}>
+          {light ? '◐ dark' : '○ light'}
+        </button>
+
+        <a href="#contato" style={{
+          marginLeft: 8, fontFamily: MONO, fontSize: 12,
+          padding: '8px 14px', background: 'var(--accent)', color: 'var(--accent-ink)',
+          textDecoration: 'none', display: 'none',
+        }} className="md:block">$ book_us →</a>
+
+        {/* Mobile hamburger */}
+        <button
+          className="md:hidden"
+          onClick={() => setMenuOpen(!menuOpen)}
+          style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 4 }}
+          aria-label="Toggle menu"
+        >
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 5 }}>
+            <span style={{ display: 'block', width: 20, height: 1, background: 'var(--fg-mid)', transition: 'transform 0.2s', transform: menuOpen ? 'rotate(45deg) translate(4px, 4px)' : 'none' }} />
+            <span style={{ display: 'block', width: 20, height: 1, background: 'var(--fg-mid)', transition: 'opacity 0.2s', opacity: menuOpen ? 0 : 1 }} />
+            <span style={{ display: 'block', width: 20, height: 1, background: 'var(--fg-mid)', transition: 'transform 0.2s', transform: menuOpen ? 'rotate(-45deg) translate(4px, -4px)' : 'none' }} />
+          </div>
+        </button>
       </div>
+
+      {/* Mobile menu */}
+      {menuOpen && (
+        <div style={{
+          position: 'absolute', top: '100%', left: 0, right: 0,
+          background: 'var(--nav-bg)', backdropFilter: 'blur(8px)',
+          borderBottom: '1px solid var(--border)',
+          padding: '16px 24px',
+          display: 'flex', flexDirection: 'column', gap: 12,
+        }} className="md:hidden">
+          {links.map(([label, href]) => (
+            <a key={label} href={href} onClick={() => setMenuOpen(false)} style={{
+              fontFamily: MONO, fontSize: 13, color: 'var(--fg-mid)', textDecoration: 'none',
+            }}>{label}</a>
+          ))}
+          <a href="#contato" onClick={() => setMenuOpen(false)} style={{
+            fontFamily: MONO, fontSize: 12, padding: '10px 16px',
+            background: 'var(--accent)', color: 'var(--accent-ink)',
+            textDecoration: 'none', marginTop: 8, textAlign: 'center',
+          }}>$ book_us →</a>
+        </div>
+      )}
     </header>
   )
 }

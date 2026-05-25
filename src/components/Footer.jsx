@@ -1,29 +1,21 @@
-import { useTranslation } from 'react-i18next'
+const MONO = '"JetBrains Mono", monospace'
 
 export default function Footer() {
-  const { t } = useTranslation()
-
   return (
-    <footer className="py-10" style={{ borderTop: '1px solid rgba(245,242,238,0.08)' }}>
-      <div className="max-w-editorial mx-auto px-6 lg:px-12">
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-          <div className="flex flex-col gap-1">
-            <span className="font-display font-300" style={{ fontSize: '0.875rem', letterSpacing: '0.18em', color: 'rgba(245,242,238,0.3)' }}>
-              RCLR
-            </span>
-            <span className="font-body text-xs tracking-wide" style={{ color: 'rgba(245,242,238,0.2)' }}>
-              {t('footer.founded')}
-            </span>
-          </div>
-
-          <div className="flex flex-col items-start sm:items-end gap-1">
-            <span className="font-body text-xs leading-relaxed max-w-xs sm:text-right" style={{ color: 'rgba(245,242,238,0.3)' }}>
-              {t('footer.tagline')}
-            </span>
-            <span className="font-body text-xs" style={{ color: 'rgba(245,242,238,0.15)' }}>
-              © {new Date().getFullYear()} · {t('footer.rights')}
-            </span>
-          </div>
+    <footer style={{
+      padding: 'clamp(32px, 4vw, 48px) clamp(24px, 4vw, 48px) 32px',
+      borderTop: '1px solid var(--border)',
+    }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 16 }}>
+        <div style={{ fontFamily: MONO, fontSize: 13, color: 'var(--accent)' }}>
+          rclr<span style={{ color: 'var(--fg-soft)' }}>.com</span>
+        </div>
+        <div style={{ display: 'flex', gap: 20, fontFamily: MONO, fontSize: 11, color: 'var(--fg-soft)', flexWrap: 'wrap' }}>
+          <span>© {new Date().getFullYear()} RCLR</span>
+          <a href="https://linkedin.com/in/rafaelncintra" target="_blank" rel="noopener noreferrer" style={{ color: 'inherit', textDecoration: 'none' }}>linkedin</a>
+          <a href="https://linkedin.com/in/lrosocha" target="_blank" rel="noopener noreferrer" style={{ color: 'inherit', textDecoration: 'none' }}>larissa/li</a>
+          <a href="https://medium.com/@rafaelnc" target="_blank" rel="noopener noreferrer" style={{ color: 'inherit', textDecoration: 'none' }}>medium</a>
+          <a href="#blog" style={{ color: 'inherit', textDecoration: 'none' }}>rss</a>
         </div>
       </div>
     </footer>
