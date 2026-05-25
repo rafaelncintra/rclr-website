@@ -756,12 +756,29 @@ function AdminShell({ user }) {
 
 export default function AdminPage() {
   const [user, setUser] = useState(undefined)
+  const [authError, setAuthError] = useState(null)
 
-  useEffect(() => onAuthStateChanged(auth, setUser), [])
+  useEffect(() => {
+    try {
+      const unsub = onAuthStateChanged(auth, setUser, (err) => setAuthError(err.message))
+      return unsub
+    } catch (err) {
+      setAuthError(err.message)
+    }
+  }, [])
+
+  if (authError) return (
+    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '100vh', background: '#0a0b0d', fontFamily: MONO, padding: 32 }}>
+      <div style={{ border: '1px solid rgba(255,80,80,0.4)', padding: 32, maxWidth: 480 }}>
+        <div style={{ color: '#ff5050', fontSize: 12, marginBottom: 12 }}>// firebase auth error</div>
+        <p style={{ color: '#f8f7f3', fontSize: 13, lineHeight: 1.6, margin: 0 }}>{authError}</p>
+      </div>
+    </div>
+  )
 
   if (user === undefined) return (
-    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '100vh', background: 'var(--bg)', fontFamily: MONO, fontSize: 12, color: 'var(--fg-dim)' }}>
-      // carregando...
+    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '100vh', background: '#0a0b0d', fontFamily: MONO, fontSize: 13, color: '#7CFFB2' }}>
+      // carregando autenticação...
     </div>
   )
 
